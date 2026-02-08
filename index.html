@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DARK TEAM MOD</title>
+<style>
+  body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #000; font-family: 'Consolas', monospace; }
+  #game-frame { width: 100%; height: 100vh; border: none; }
+
+  /* ULTRA COMPACT HACKER BOX */
+  #signal-box {
+      position: absolute; top: 10%; left: 50%; transform: translateX(-50%);
+      width: 160px; /* Reduced width */
+      background: rgba(0, 0, 0, 0.7); /* More transparent */
+      backdrop-filter: blur(5px);
+      border: 2px solid #ff0000; 
+      border-radius: 10px;
+      box-shadow: 0 0 10px #ff0000;
+      color: #fff; z-index: 9999; cursor: move; padding: 10px;
+      text-align: center; user-select: none;
+      animation: color-shift 3s infinite alternate;
+      touch-action: none;
+  }
+
+  @keyframes color-shift {
+      0% { border-color: #ff0000; box-shadow: 0 0 8px #ff0000; }
+      50% { border-color: #00ffff; box-shadow: 0 0 8px #00ffff; }
+      100% { border-color: #00ff00; box-shadow: 0 0 8px #00ff00; }
+  }
+
+  .header { 
+      font-weight: 900; font-size: 13px; letter-spacing: 1px; 
+      margin-bottom: 8px; color: #fff; text-shadow: 1px 1px #ff0000;
+  }
+  
+  #hack-content { display: none; }
+
+  .res-container { 
+      background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); 
+      padding: 5px; border-radius: 6px; margin-bottom: 5px;
+  }
+  .label { font-size: 8px; color: #ffff00; text-transform: uppercase; }
+  .value { font-size: 22px; font-weight: 900; line-height: 1; margin: 4px 0; }
+  
+  .lucky-nums {
+      font-size: 13px; font-weight: bold; color: #00ff00;
+  }
+
+  .timer { font-size: 10px; color: #fff; margin-bottom: 5px; }
+  #seconds { color: #ff0000; font-weight: bold; }
+
+  /* Mini Login and Button */
+  .add-btn {
+      display: block; padding: 5px;
+      background: #ff0000; color: #fff;
+      text-decoration: none; font-size: 9px; font-weight: 900;
+      border-radius: 4px; text-transform: uppercase;
+  }
+
+  #login-section input {
+      width: 80%; padding: 5px; margin-bottom: 8px; background: #111; 
+      border: 1px solid #ff0000; color: #fff; text-align: center; border-radius: 4px; 
+      outline: none; font-size: 10px;
+  }
+  .login-btn { 
+      background: #00ff00; color: #000; border: none; padding: 6px; 
+      cursor: pointer; font-weight: 900; width: 100%; border-radius: 4px; font-size: 9px;
+  }
+</style>
+</head>
+<body oncontextmenu="return false;">
+<iframe id="game-frame" src="https://tkclub2.com/#/register?invitationCode=16621180332"></iframe>
+<div id="signal-box">
+  <div class="header"> DARK TEAM MOD </div>
+  <div id="login-section">
+    <input type="password" id="passInput" placeholder="KEY" />
+    <button class="login-btn" onclick="checkAccess()">START</button>
+  </div>
+  <div id="hack-content">
+    <div class="res-container">
+      <div class="label">PREDICT</div>
+      <div id="predict-res" class="value">...</div>
+      <div class="lucky-nums" id="lucky-pair">-- &amp; --</div>
+    </div>
+    <div class="timer">
+      NEXT: <span id="seconds">30</span> s
+    </div>
+    <a href="https://t.me/Dark_Communityy0" class="add-btn">TELEGRAM</a>
+  </div>
+</div>
+<script>
+  // --- DRAG AND DROP LOGIC (KEEPING YOUR DESIGN) ---
+  const box = document.getElementById('signal-box');
+  let isDragging = false;
+  let offsetX, offsetY;
+
+  const startDrag = (e) => {
+      if(e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON' || e.target.tagName === 'A') return;
+      isDragging = true;
+      const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+      const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+      offsetX = clientX - box.offsetLeft;
+      offsetY = clientY - box.offsetTop;
+      box.style.transform = 'none';
+  };
+
+  const doDrag = (e) => {
+      if (!isDragging) return;
+      const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+      const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+      box.style.left = (clientX - offsetX) + 'px';
+      box.style.top = (clientY - offsetY) + 'px';
+  };
+
+  box.addEventListener('mousedown', startDrag);
+  document.addEventListener('mousemove', doDrag);
+  document.addEventListener('mouseup', () => isDragging = false);
+  box.addEventListener('touchstart', startDrag, {passive: false});
+  document.addEventListener('touchmove', doDrag, {passive: false});
+  document.addEventListener('touchend', () => isDragging = false);
+
+  // --- PREDICTION ENGINE ---
+  function checkAccess() {
+      if(document.getElementById('passInput').value === "Mrapex") {
+          document.getElementById('login-section').style.display = 'none';
+          document.getElementById('hack-content').style.display = 'block';
+          startHack();
+      } else {
+          alert("WRONG KEY");
+      }
+  }
+
+  function startHack() {
+      const list = ["BIG 7,9", "SMALL 0,2", "SMALL 1,3", "BIG 6,8", "BIG 5,9", "SMALL 2,4"];
+
+      setInterval(() => {
+          const now = new Date();
+          const ms = now.getTime();
+          
+          // Logic sync from File 1
+          let p = Math.floor(ms / 30000);
+          let seed = p * 1.234;
+          let idx = Math.floor(Math.abs(Math.sin(seed) * list.length)) % list.length;
+          
+          let resultData = list[idx].split(' ');
+          let resultText = resultData[0];
+          let luckyNums = resultData[1];
+
+          // Update UI
+          const resEl = document.getElementById('predict-res');
+          resEl.innerText = resultText;
+          resEl.style.color = resultText === "BIG" ? "#00ffff" : "#ff00ff";
+          document.getElementById('lucky-pair').innerText = luckyNums;
+
+          // Timer sync
+          const totalSec = now.getSeconds();
+          const remaining = totalSec >= 30 ? 60 - totalSec : 30 - totalSec;
+          document.getElementById('seconds').innerText = remaining;
+      }, 1000);
+  }
+</script>
+</body>
+</html>
